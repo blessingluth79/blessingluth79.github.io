@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>travail pratique d'e-commerce</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Calcul de l'Écart-Type</h2>
+    <label for="values">Entrez les valeurs séparées par des virgules :</label>
+    <input type="text" id="values" placeholder="Ex: 1,2,3,4,5">
+    <button onclick="calculerEcartType()">Calculer</button>
+    <h3>Résultat : <span id="result"></span></h3>
+
+    <script>
+        function calculerEcartType() {
+            let inputValues = document.getElementById('values').value;
+            let numbers = inputValues.split(',').map(num => parseFloat(num.trim()));
+            
+            if (numbers.some(isNaN)) {
+                document.getElementById('result').textContent = "Veuillez entrer des nombres valides.";
+                return;
+            }
+            
+            let mean = numbers.reduce((sum, num) => sum + num, 0) / numbers.length;
+            let variance = numbers.reduce((sum, num) => sum + Math.pow(num - mean, 2), 0) / numbers.length;
+            let stdDeviation = Math.sqrt(variance);
+            
+            document.getElementById('result').textContent = stdDeviation.toFixed(2);
+        }
+    </script>  
+</body>
+</html>
