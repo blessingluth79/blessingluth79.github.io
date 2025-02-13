@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul Statistique</title>
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            background-color: #ac9a9a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            text-align: center;
+        }
+        input {
+            width: 90%;
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #c58ae7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #000000;
+        }
+        h3 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calcul Statistique</h2>
+        <label for="values">Entrez les valeurs séparées par des virgules :</label>
+        <input type="text" id="values" placeholder="Ex: 1,2,3,4,5">
+        <button onclick="calculerStatistiques()">Calculer</button>
+        
+        <h3>Moyenne : <span id="moyenne"></span></h3>
+        <h3>Variance : <span id="variance"></span></h3>
+        <h3>Écart-Type : <span id="ecart-type"></span></h3>
+    </div>
+
+    <script>
+        function calculerStatistiques() {
+            let inputValues = document.getElementById('values').value;
+            let numbers = inputValues.split(',').map(num => parseFloat(num.trim()));
+            
+            if (numbers.some(isNaN) || numbers.length < 2) {
+                document.getElementById('moyenne').textContent = "Erreur";
+                document.getElementById('variance').textContent = "Erreur";
+                document.getElementById('ecart-type').textContent = "Erreur";
+                return;
+            }
+            
+            let mean = numbers.reduce((sum, num) => sum + num, 0) / numbers.length;
+            let variance = numbers.reduce((sum, num) => sum + Math.pow(num - mean, 2), 0) / (numbers.length - 1);
+            let stdDeviation = Math.sqrt(variance);
+            
+            document.getElementById('moyenne').textContent = mean.toFixed(2);
+            document.getElementById('variance').textContent = variance.toFixed(2);
+            document.getElementById('ecart-type').textContent = stdDeviation.toFixed(2);
+        }
+    </script>
+</body>
+</html>
